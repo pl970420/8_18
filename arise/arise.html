@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <title>arise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #content {
+            width: 100vw;
+            height: 100vh;
+            background: cornflowerblue;
+            text-align: center;
+        }
+
+        #btn {
+            width: 100px;
+            height: 50px;
+            background: deepskyblue;
+            font-size: 20px;
+            border: 0;
+        }
+
+        #dialog {
+            width: 100vw;
+            height: 60vh;
+
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 3;        background:pink;
+        }
+
+        #mask {
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            opacity: 0.3;
+
+        }
+
+        #close {
+            position: absolute;
+            top: 12px;
+            right: 48%;
+            background:pink;
+        }
+
+    </style>
+</head>
+<body>
+<div id="content"></div>
+</div>
+</body>
+<script>
+    window.onload = function () {
+        var content = document.getElementById("content");
+        var button = document.createElement("button");
+        button.id = "btn";
+        button.innerHTML = "click me";
+        content.appendChild(button);
+        button.addEventListener("click", function () {
+            var pop = document.createElement("div");
+            pop.id = "dialog";
+            var close = document.createElement("span");
+            close.id = "close";
+            close.innerHTML = "close";
+            var mask = document.createElement("div");
+            mask.id = "mask";
+            var frag = document.createDocumentFragment();
+            pop.appendChild(close);
+            frag.appendChild(pop);
+            frag.appendChild(mask);
+
+            var e = event || window.event;
+            content.appendChild(frag);
+            e.cancelBubble || e.stopPropagation();
+        });
+        content.addEventListener("click", function () {
+            hidden();
+        });
+        function hidden() {
+            var e = event || window.event;
+            var target = e.target || e.srcElement;
+            if (target.id != "dialog") {
+                content.removeChild(document.getElementById("mask"));
+                content.removeChild(document.getElementById("dialog"));
+            }
+        }
+    }
+</script>
+
+
+</html>

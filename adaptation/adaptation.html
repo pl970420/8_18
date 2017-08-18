@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>adaptation</title>
+    <style>
+        .pic{ width:400px; height:600px; border:#ffffff solid 1px; text-align:center;background: darkred}
+    </style>
+    <script>
+        window.onload=function(){
+            ImageAdaptation();
+        };
+        function ImageAdaptation(){
+            var getContent=document.getElementsByClassName("pic")[0];
+            var getImg=getContent.getElementsByTagName('img')[0];
+            var fw=getContent.offsetWidth-(2*getContent.clientLeft);
+            var fh=getContent.offsetHeight-(2*getContent.clientTop);
+            var img_w=getImg.width;
+            var img_h=getImg.height;
+            var m=img_w/fw;
+            var n=img_h/fh;
+            if (!(m >= 1 && n <= 1)) {
+                if (m <= 1 && n >= 1) {
+                    img_w = parseInt(img_w / n);
+                    img_h = parseInt(img_h / n);
+                    getImg.width = img_w;
+                    getImg.height = img_h;
+                } else {
+                    if (m >= 1 && n >= 1) {
+                        getMAX = Math.max(m, n);
+                        img_w = parseInt(img_w / getMAX);
+                        img_h = parseInt(img_h / getMAX);
+                        getImg.width = img_w;
+                        getImg.height = img_h;
+                    }
+                }
+            } else {
+                img_w = parseInt(img_w / m);
+                img_h = parseInt(img_h / m);
+                getImg.width = img_w;
+                getImg.height = img_h;
+            }
+            if (getImg.height < fh) {
+                var center = ((fh - getImg.height) / 2);
+                getImg.style.marginTop = center.toString() + "px";
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="pic"><img src="img/test_1.jpg" /></div>
+</body>
+</html>
